@@ -1,6 +1,4 @@
-# XRAY-VLESS-LITE
-
-**XrayLite by JhopanStore**
+# XrayLite by JhopanStore
 
 **Lightweight VPN Server dengan Xray + Nginx + VLESS**
 
@@ -8,7 +6,7 @@ Setup VPN server yang super ringan, stabil, dan mudah di-manage. Perfect untuk p
 
 ---
 
-## ✨ **Features**
+## ✨ Features
 
 - ✅ **Super Lightweight** - Hanya ~20 MB RAM usage
 - ✅ **VLESS Protocol** - Modern, efficient, hard to detect
@@ -20,12 +18,13 @@ Setup VPN server yang super ringan, stabil, dan mudah di-manage. Perfect untuk p
 - ✅ **CLI User Management** - Simple commands untuk add/delete users
 - ✅ **Interactive Menu** - Beautiful menu system (command: `menu`)
 - ✅ **Bandwidth Monitoring** - vnstat integration (optional)
+- ✅ **Speed Test** - speedtest-cli integration
 - ✅ **Auto-Recovery** - Systemd auto-restart jika crash
 - ✅ **One-Command Install** - Setup dalam 5-10 menit
 
 ---
 
-## 🚀 **Quick Install**
+## 🚀 Quick Install
 
 **One-liner installation:**
 
@@ -51,7 +50,7 @@ menu
 
 ---
 
-## 📊 **Resource Usage**
+## 📊 Resource Usage
 
 | Component | Memory | Disk |
 |-----------|--------|------|
@@ -63,39 +62,16 @@ menu
 
 ---
 
-## 🚀 **Installation**
+## 📝 Installation
 
-### **Requirements**
+### Requirements
 
 - Ubuntu 20.04/22.04/24.04 (recommended)
 - Root access
 - Domain name (pointed to VPS IP)
 - Port 80 & 443 open
 
-### **Quick Install (Recommended)**
-
-Lihat section **[🚀 Quick Install](#-quick-install)** di atas untuk one-liner installation.
-
-### **Manual Installation**
-
-Jika mau download manual:
-
-```bash
-# 1. Download installer
-wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/install.sh
-
-# Atau clone repository:
-git clone https://github.com/jhopan/XrayLiteByJhopanStore.git
-cd XrayLiteByJhopanStore
-
-# 2. Make executable
-chmod +x install.sh
-
-# 3. Run installer
-sudo bash install.sh
-```
-
-### **Interactive Setup**
+### Interactive Setup
 
 Installer akan tanya:
 
@@ -111,15 +87,48 @@ Pilihan [1-3, default: 1]: 1
 Install vnstat untuk bandwidth monitoring? [Y/n]: Y
 ```
 
-### **Installation Time**
+### Installation Time
 
 ~5-10 menit (tergantung network speed)
 
 ---
 
-## 📝 **Commands Reference**
+## 🎮 Interactive Menu
 
-### **User Management**
+Ketik `menu` untuk akses menu interaktif:
+
+```
+╔════════════════════════════════════════════════════════════════╗
+║                    XrayLite Menu                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+  1. Tambah akun baru
+  2. Hapus akun
+  3. Lihat VLESS URL
+  4. Restart Xray
+  5. Restart Nginx
+  6. Restart semua services
+  7. Cek bandwidth (vnstat)
+  8. Cek logs
+  9. Update system
+  10. Test speed (speedtest)
+  0. Keluar
+```
+
+**Features:**
+- System info (OS, uptime, RAM, CPU, disk)
+- VPN info (domain, IP, Xray/Nginx status, user count)
+- Bandwidth monitoring (today, this month)
+- User management (add/delete/list)
+- Service management (restart Xray/Nginx)
+- Log viewing (Xray/Nginx)
+- Speed test (ping, download, upload)
+
+---
+
+## 📚 Commands Reference
+
+### User Management
 
 ```bash
 # Create new user
@@ -136,6 +145,7 @@ sudo vpn-user url <username>
 ```
 
 **Example:**
+
 ```bash
 sudo vpn-user add john
 # Output:
@@ -165,7 +175,7 @@ sudo vpn-user url jane
 
 ---
 
-### **Service Management**
+### Service Management
 
 ```bash
 # Check Xray status
@@ -187,7 +197,7 @@ sudo tail -f /var/log/nginx/error.log
 
 ---
 
-### **Bandwidth Monitoring (vnstat)**
+### Bandwidth Monitoring (vnstat)
 
 ```bash
 # Show bandwidth summary
@@ -210,6 +220,7 @@ sudo vnstat --cleartop
 ```
 
 **Example Output:**
+
 ```
                       rx      /      tx      /     total    /   estimated
  Interface: eth0
@@ -221,7 +232,37 @@ sudo vnstat --cleartop
 
 ---
 
-### **Monitoring & Maintenance**
+### Speed Test (speedtest-cli)
+
+```bash
+# Test internet speed
+speedtest --simple
+
+# Test with specific server
+speedtest --server <server_id>
+
+# List available servers
+speedtest --list
+
+# Show speed in bytes instead of bits
+speedtest --bytes
+```
+
+**Example Output:**
+
+```
+Ping: 12.345 ms
+Download: 123.45 Mbit/s
+Upload: 67.89 Mbit/s
+```
+
+**Via Menu:**
+- Buka menu: `menu`
+- Pilih opsi: `10` (Test speed)
+
+---
+
+### Monitoring & Maintenance
 
 ```bash
 # Check memory usage
@@ -248,7 +289,7 @@ sudo systemctl reload nginx
 
 ---
 
-## 🔧 **Configuration Files**
+## 🔧 Configuration Files
 
 | File | Purpose |
 |------|---------|
@@ -256,14 +297,15 @@ sudo systemctl reload nginx
 | `/etc/nginx/sites-available/vpn` | Nginx configuration |
 | `/etc/letsencrypt/live/<domain>/` | SSL certificates |
 | `/usr/local/bin/vpn-user` | User management script |
+| `/usr/local/bin/menu` | Interactive menu script |
 | `/etc/logrotate.d/xray` | Log rotation config |
 | `/root/.vpn-domain` | Domain name (used by vpn-user) |
 
 ---
 
-## 📈 **Performance**
+## 📈 Performance
 
-### **Expected Performance**
+### Expected Performance
 
 ```
 Speed: 50-80 Mbps (tergantung network)
@@ -273,7 +315,7 @@ Concurrent Users: 1-5 (personal use)
 Max Users: ~50 (theoretical)
 ```
 
-### **Optimization Features**
+### Optimization Features
 
 - ✅ VLESS protocol (lightweight)
 - ✅ WebSocket transport (good compatibility)
@@ -284,9 +326,9 @@ Max Users: ~50 (theoretical)
 
 ---
 
-## 🛡️ **Security**
+## 🛡️ Security
 
-### **Built-in Security**
+### Built-in Security
 
 - ✅ VLESS + TLS encryption
 - ✅ UUID authentication (per user)
@@ -295,7 +337,7 @@ Max Users: ~50 (theoretical)
 - ✅ SNI support
 - ✅ Private IP blocking (geoip:private)
 
-### **What's NOT Included (by design)**
+### What's NOT Included (by design)
 
 - ❌ Firewall (UFW/iptables) - UUID auth sudah cukup secure
 - ❌ Fail2ban - Low risk untuk personal use
@@ -306,9 +348,9 @@ Max Users: ~50 (theoretical)
 
 ---
 
-## 🔄 **Automated Maintenance**
+## 🔄 Automated Maintenance
 
-### **Daily Restart (Cron Job)**
+### Daily Restart (Cron Job)
 
 ```
 Schedule: 00:00 (timezone yang kamu pilih)
@@ -317,7 +359,7 @@ Purpose: Clear memory, prevent memory leak
 Downtime: 1-3 seconds
 ```
 
-### **Log Rotation**
+### Log Rotation
 
 ```
 Schedule: Daily
@@ -326,7 +368,7 @@ Compression: Enabled
 Purpose: Prevent disk full
 ```
 
-### **SSL Auto-Renewal**
+### SSL Auto-Renewal
 
 ```
 Schedule: Every 12 hours (certbot timer)
@@ -336,9 +378,9 @@ Purpose: Prevent SSL expiry
 
 ---
 
-## 🐛 **Troubleshooting**
+## 🐛 Troubleshooting
 
-### **Issue: VPN tidak bisa connect**
+### Issue: VPN tidak bisa connect
 
 ```bash
 # 1. Check Xray status
@@ -362,7 +404,7 @@ sudo systemctl restart nginx
 
 ---
 
-### **Issue: SSL certificate error**
+### Issue: SSL certificate error
 
 ```bash
 # Check certificate
@@ -380,7 +422,7 @@ sudo nginx -t
 
 ---
 
-### **Issue: High memory usage**
+### Issue: High memory usage
 
 ```bash
 # Check memory
@@ -399,7 +441,7 @@ sudo crontab -l
 
 ---
 
-### **Issue: Disk full**
+### Issue: Disk full
 
 ```bash
 # Check disk usage
@@ -420,7 +462,35 @@ sudo logrotate -d /etc/logrotate.d/xray
 
 ---
 
-## 📦 **Uninstall**
+### Issue: Menu tidak terinstall
+
+```bash
+# Download menu.sh dari GitHub
+wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/menu.sh
+
+# Install menu
+sudo mv menu.sh /usr/local/bin/menu
+sudo chmod +x /usr/local/bin/menu
+
+# Test menu
+menu
+```
+
+---
+
+### Issue: speedtest-cli tidak terinstall
+
+```bash
+# Install speedtest-cli
+pip3 install speedtest-cli
+
+# Test speed
+speedtest --simple
+```
+
+---
+
+## 📦 Uninstall
 
 ```bash
 # Stop services
@@ -428,7 +498,7 @@ sudo systemctl stop xray
 sudo systemctl stop nginx
 
 # Remove packages
-sudo apt-get purge -y nginx certbot python3-certbot-nginx
+sudo apt-get purge -y nginx certbot python3-certbot-nginx vnstat speedtest-cli
 sudo apt-get autoremove -y
 
 # Remove Xray
@@ -439,6 +509,7 @@ sudo rm -rf /usr/local/etc/xray/
 sudo rm -rf /etc/nginx/sites-available/vpn
 sudo rm -rf /etc/nginx/sites-enabled/vpn
 sudo rm -f /usr/local/bin/vpn-user
+sudo rm -f /usr/local/bin/menu
 sudo rm -f /etc/logrotate.d/xray
 sudo rm -f /root/.vpn-domain
 
@@ -451,18 +522,22 @@ sudo rm -rf /etc/letsencrypt/live/yourdomain.com/
 sudo rm -rf /etc/letsencrypt/archive/yourdomain.com/
 sudo rm -rf /etc/letsencrypt/renewal/yourdomain.com.conf
 
-# Optional: Remove vnstat
-sudo apt-get purge -y vnstat
+# Optional: Remove vnstat data
 sudo rm -rf /var/lib/vnstat/
 ```
 
 ---
 
-## 🆕 **Update**
+## 🆕 Update
 
 ```bash
 # Update Xray
 sudo bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+
+# Update menu script
+wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/menu.sh
+sudo mv menu.sh /usr/local/bin/menu
+sudo chmod +x /usr/local/bin/menu
 
 # Update system packages
 sudo apt-get update
@@ -477,9 +552,9 @@ sudo systemctl restart nginx
 
 ---
 
-## 📚 **FAQ**
+## 📚 FAQ
 
-### **Q: Berapa maksimal users yang bisa ditampung?**
+### Q: Berapa maksimal users yang bisa ditampung?
 
 **A:** Theoretical max ~50 users dengan VPS specs:
 - RAM: 1 GB
@@ -490,7 +565,7 @@ Untuk personal use (1-5 users), setup ini sangat stabil dan efisien.
 
 ---
 
-### **Q: Apakah bisa tambah protocol lain (VMess, Trojan)?**
+### Q: Apakah bisa tambah protocol lain (VMess, Trojan)?
 
 **A:** Bisa, tapi tidak recommended untuk setup ini. XRAY-VLESS-LITE dirancang untuk VLESS only agar lightweight dan simple.
 
@@ -498,123 +573,84 @@ Jika butuh multi-protocol, consider menggunakan Marzban atau XRAY-MANTAP.
 
 ---
 
-### **Q: Apakah ada web dashboard?**
+### Q: Apakah bisa dipakai bersamaan dengan Cloudflare Tunnel?
 
-**A:** Tidak. Setup ini CLI-only untuk minimize resource usage. Semua management lewat `vpn-user` command.
+**A:** YA, BISA!
 
-Jika butuh web dashboard, consider menggunakan Marzban.
+- XrayLite (VLESS) pakai **TCP port 443**
+- Cloudflare Tunnel (QUIC) pakai **UDP port 443**
+- **Tidak ada konflik** karena protokol berbeda
 
----
-
-### **Q: Apakah support quota tracking?**
-
-**A:** Tidak built-in. Setup ini focus pada simplicity. Quota tracking butuh database dan monitoring, yang akan add complexity dan resource usage.
-
-Jika butuh quota tracking, consider adding custom script atau menggunakan Marzban.
-
----
-
-### **Q: Apakah bisa digunakan untuk commercial?**
-
-**A:** Bisa, tapi tidak recommended. Setup ini dirancang untuk personal use. Untuk commercial, consider:
-- Adding firewall
-- Adding monitoring/alerting
-- Adding backup strategy
-- Adding quota management
-- Using more robust solution (Marzban, etc)
+**Best practice:**
+- ✅ XrayLite untuk VPN (direct connection)
+- ✅ Cloudflare Tunnel untuk expose web app/API
+- ❌ Jangan route VLESS traffic lewat CF Tunnel (tidak optimal)
 
 ---
 
-### **Q: Bagaimana jika mau migrate ke VPS baru?**
+### Q: Kenapa menu.sh tidak terinstall otomatis?
 
-**A:** Backup dan restore:
+**A:** Installer sekarang sudah auto-download menu.sh dari GitHub!
 
+Jika masih tidak terinstall, install manual:
 ```bash
-# Di old VPS:
-sudo cp /usr/local/etc/xray/config.json ~/config.json.bak
-sudo cp /etc/nginx/sites-available/vpn ~/vpn.conf.bak
-sudo cp /usr/local/bin/vpn-user ~/vpn-user.bak
-sudo cp /root/.vpn-domain ~/.vpn-domain.bak
-
-# Download ke laptop
-scp root@old-vps:~/config.json.bak .
-scp root@old-vps:~/vpn.conf.bak .
-scp root@old-vps:~/vpn-user.bak .
-scp root@old-vps:~/.vpn-domain.bak .
-
-# Di new VPS:
-# 1. Run installer (dengan domain yang sama)
-# 2. Upload backup files
-# 3. Restore config
-sudo cp config.json.bak /usr/local/etc/xray/config.json
-sudo cp vpn.conf.bak /etc/nginx/sites-available/vpn
-sudo cp vpn-user.bak /usr/local/bin/vpn-user
-sudo cp .vpn-domain.bak /root/.vpn-domain
-
-# 4. Restart services
-sudo systemctl restart xray
-sudo systemctl restart nginx
-
-# 5. Update DNS (point ke new VPS IP)
+wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/menu.sh
+sudo mv menu.sh /usr/local/bin/menu
+sudo chmod +x /usr/local/bin/menu
 ```
 
 ---
 
-## 🤝 **Contributing**
+### Q: Bagaimana cara test speed server?
 
-Feel free to fork, modify, dan improve! Setup ini open dan customizable.
+**A:** Ada 2 cara:
 
-**Ideas for improvement:**
-- Add quota tracking
-- Add expiry date
-- Add subscription URLs
-- Add web dashboard (optional)
-- Add Telegram bot integration
-- Add backup automation
-- Add BBR optimization
+**Via Menu:**
+```bash
+menu
+# Pilih opsi: 10 (Test speed)
+```
 
----
-
-## 📄 **License**
-
-Open source, use as you wish!
+**Via Command Line:**
+```bash
+speedtest --simple
+```
 
 ---
 
-## 🙏 **Credits**
+## 📞 Support
 
-- **Xray** - https://github.com/XTLS/Xray-core
-- **Nginx** - https://nginx.org/
-- **Let's Encrypt** - https://letsencrypt.org/
-- **Certbot** - https://certbot.eff.org/
-- **Vnstat** - https://humdi.net/vnstat/
-
----
-
-## 💖 **Made With Love**
-
-**XrayLite by JhopanStore**
-
-Custom VPN server setup yang lightweight, stable, dan easy to manage.
-
-Designed for personal use dengan focus pada:
-- ✅ Simplicity
-- ✅ Performance
-- ✅ Stability
-- ✅ Minimal resource usage
-
----
-
-## 📞 **Support**
-
-Jika ada issue atau pertanyaan:
+Untuk pertanyaan atau issue, silakan:
 1. Check troubleshooting section di atas
-2. Check logs: `sudo tail -50 /var/log/xray/error.log`
-3. Verify config: `sudo cat /usr/local/etc/xray/config.json | jq`
-4. Test services: `sudo systemctl status xray nginx`
+2. Review logs: `sudo journalctl -u xray -n 50`
+3. Test config: `sudo nginx -t`
 
 ---
 
-**XrayLite by JhopanStore** ❤️
+## 📄 License
 
-*Lightweight VPN Server for Everyone*
+This project is for personal and educational use.
+
+---
+
+## 👤 Author
+
+**JhopanStore**
+
+- GitHub: [@jhopan](https://github.com/jhopan)
+- Repository: [XrayLiteByJhopanStore](https://github.com/jhopan/XrayLiteByJhopanStore)
+
+---
+
+## 🙏 Credits
+
+- [Xray-core](https://github.com/XTLS/Xray-core) - Xray proxy
+- [Nginx](https://nginx.org/) - Web server
+- [Let's Encrypt](https://letsencrypt.org/) - Free SSL certificates
+- [Certbot](https://certbot.eff.org/) - SSL automation
+- [vnstat](https://humdi.net/vnstat/) - Network monitor
+- [speedtest-cli](https://github.com/sivel/speedtest-cli) - Speed test
+
+---
+
+**Made with ❤️ by JhopanStore**
