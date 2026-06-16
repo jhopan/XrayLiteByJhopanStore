@@ -172,6 +172,17 @@ install_vnstat() {
     fi
 }
 
+install_speedtest() {
+    echo ""
+    print_info "Installing speedtest-cli (speed testing)..."
+    
+    # Install speedtest-cli via pip
+    pip3 install -q speedtest-cli
+    
+    print_success "speedtest-cli installed"
+    print_info "Use command: speedtest or speedtest-cli"
+}
+
 install_xray() {
     echo ""
     print_info "Installing Xray..."
@@ -711,6 +722,7 @@ main() {
     update_system
     install_dependencies
     install_vnstat
+    install_speedtest
     install_xray
     configure_xray
     configure_nginx

@@ -208,6 +208,7 @@ show_menu() {
     echo -e "  ${GREEN}7.${NC} Cek bandwidth (vnstat)"
     echo -e "  ${GREEN}8.${NC} Cek logs"
     echo -e "  ${GREEN}9.${NC} Update system"
+    echo -e "  ${GREEN}10.${NC} Test speed (speedtest)"
     echo -e "  ${RED}0.${NC} Keluar"
     echo ""
     echo -e "${CYAN}═══════════════════════════════════════════════════════════════════${NC}"
@@ -429,6 +430,27 @@ update_system() {
     read -p "Tekan ENTER untuk kembali ke menu..."
 }
 
+test_speed() {
+    echo ""
+    echo -e "${BLUE}Testing internet speed...${NC}"
+    echo ""
+    
+    # Check if speedtest-cli is installed
+    if ! command -v speedtest &> /dev/null; then
+        echo -e "${RED}speedtest-cli tidak terinstall!${NC}"
+        echo -e "${YELLOW}Install dengan: pip3 install speedtest-cli${NC}"
+        echo ""
+        read -p "Tekan ENTER untuk kembali ke menu..."
+        return
+    fi
+    
+    # Run speedtest
+    speedtest --simple
+    
+    echo ""
+    read -p "Tekan ENTER untuk kembali ke menu..."
+}
+
 # Main loop
 while true; do
     # Get fresh data
@@ -469,6 +491,9 @@ while true; do
             ;;
         9)
             update_system
+            ;;
+        10)
+            test_speed
             ;;
         0)
             echo ""
