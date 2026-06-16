@@ -543,15 +543,27 @@ create_menu_script() {
     echo ""
     print_info "Creating interactive menu..."
     
-    # Download menu script from same directory
+    # Download menu script from same directory or GitHub
     if [ -f "menu.sh" ]; then
         cp menu.sh /usr/local/bin/menu
         chmod +x /usr/local/bin/menu
         print_success "Interactive menu created"
         print_info "Use command: menu"
     else
-        print_warning "menu.sh not found, skipping menu installation"
-        print_info "You can add it later manually"
+        # Try to download from GitHub
+        print_info "Downloading menu.sh from GitHub..."
+        if wget -q https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/menu.sh -O /tmp/menu.sh; then
+            cp /tmp/menu.sh /usr/local/bin/menu
+            chmod +x /usr/local/bin/menu
+            rm -f /tmp/menu.sh
+            print_success "Interactive menu created"
+            print_info "Use command: menu"
+        else
+            print_warning "Failed to download menu.sh from GitHub"
+            print_info "You can add it later manually:"
+            print_info "  wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/menu.sh"
+            print_info "  sudo mv menu.sh /usr/local/bin/menu && sudo chmod +x /usr/local/bin/menu"
+        fi
     fi
 }
 
