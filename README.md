@@ -18,9 +18,36 @@ Setup VPN server yang super ringan, stabil, dan mudah di-manage. Perfect untuk p
 - ✅ **Log Rotation** - 7 days retention, compressed
 - ✅ **Warning-Only Logging** - Hemat disk, hanya log issues
 - ✅ **CLI User Management** - Simple commands untuk add/delete users
+- ✅ **Interactive Menu** - Beautiful menu system (command: `menu`)
 - ✅ **Bandwidth Monitoring** - vnstat integration (optional)
 - ✅ **Auto-Recovery** - Systemd auto-restart jika crash
 - ✅ **One-Command Install** - Setup dalam 5-10 menit
+
+---
+
+## 🚀 **Quick Install**
+
+**One-liner installation:**
+
+```bash
+wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/install.sh && sudo bash install.sh
+```
+
+**Atau clone repository:**
+
+```bash
+git clone https://github.com/jhopan/XrayLiteByJhopanStore.git
+cd XrayLiteByJhopanStore
+sudo bash install.sh
+```
+
+**Setelah install selesai, ketik:**
+
+```bash
+menu
+```
+
+**That's it! VPN server ready dalam 5-10 menit!** 🎉
 
 ---
 
@@ -36,7 +63,7 @@ Setup VPN server yang super ringan, stabil, dan mudah di-manage. Perfect untuk p
 
 ---
 
-## 🚀 **Quick Start**
+## 🚀 **Installation**
 
 ### **Requirements**
 
@@ -45,18 +72,26 @@ Setup VPN server yang super ringan, stabil, dan mudah di-manage. Perfect untuk p
 - Domain name (pointed to VPS IP)
 - Port 80 & 443 open
 
-### **Installation**
+### **Quick Install (Recommended)**
+
+Lihat section **[🚀 Quick Install](#-quick-install)** di atas untuk one-liner installation.
+
+### **Manual Installation**
+
+Jika mau download manual:
 
 ```bash
 # 1. Download installer
-wget https://raw.githubusercontent.com/yourusername/xray-vless-lite/main/install.sh
+wget https://raw.githubusercontent.com/jhopan/XrayLiteByJhopanStore/main/install.sh
 
-# Atau copy-paste dari file lokal:
-# nano install.sh
-# (paste script)
-# chmod +x install.sh
+# Atau clone repository:
+git clone https://github.com/jhopan/XrayLiteByJhopanStore.git
+cd XrayLiteByJhopanStore
 
-# 2. Run installer
+# 2. Make executable
+chmod +x install.sh
+
+# 3. Run installer
 sudo bash install.sh
 ```
 
