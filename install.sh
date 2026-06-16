@@ -1,5 +1,3 @@
-      0 [main] bash 19798 dofork: child -1 - forked process 10712 died unexpectedly, retry 0, exit code 0xC0000142, errno 11
-/usr/bin/bash: fork: retry: Resource temporarily unavailable
 #!/bin/bash
 
 # ============================================================================
@@ -165,8 +163,9 @@ install_vnstat() {
         print_info "Installing vnstat (bandwidth monitoring)..."
         apt-get install -y -qq vnstat
         
-        # Configure vnstat
-        vnstat --create
+        # Configure vnstat (auto-detect interface)
+        systemctl start vnstat
+        systemctl enable vnstat
         
         print_success "Vnstat installed"
         print_info "Memory usage: ~2-3 MB"
