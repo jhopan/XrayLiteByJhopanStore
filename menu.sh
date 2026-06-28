@@ -2,7 +2,7 @@
 
 # ============================================================================
 # XRAY-VLESS-LITE Interactive Menu
-# Version: 1.0.0
+# Version: 1.1.0 - Ultra Minimal (Optimized for Gaming + Streaming)
 # ============================================================================
 
 # Colors

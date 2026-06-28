@@ -3,8 +3,8 @@
 # ============================================================================
 # XRAY-VLESS-LITE Installer
 # Lightweight VPN Server with Xray + Nginx + VLESS
-# Version: 1.0.0
-# Author: Custom Build
+# Version: 1.1.0 - Ultra Minimal (Optimized for Gaming + Streaming)
+# Author: JhopanStore
 # ============================================================================
 
 set -e
@@ -25,7 +25,7 @@ print_header() {
     echo "  XRAY-VLESS-LITE Installer"
     echo "  Lightweight VPN Server (Xray + Nginx + VLESS)"
     echo "  XrayLite by JhopanStore"
-    echo "  Version: 1.0.0"
+    echo "  Version: 1.1.0 - Ultra Minimal (Gaming + Streaming Optimized)"
     echo "================================================================"
     echo -e "${NC}"
 }
@@ -203,13 +203,22 @@ configure_xray() {
     # Backup default config
     cp /usr/local/etc/xray/config.json /usr/local/etc/xray/config.json.bak
     
-    # Create VLESS-only config
+    # Create Ultra Minimal VLESS config (optimized for gaming + streaming)
     cat > /usr/local/etc/xray/config.json << 'EOF'
 {
   "log": {
     "loglevel": "warning",
     "access": "none",
     "error": "/var/log/xray/error.log"
+  },
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "8.8.8.8"
+    ],
+    "queryStrategy": "UseIPv4",
+    "disableCache": false,
+    "disableFallback": false
   },
   "inbounds": [
     {
@@ -239,28 +248,15 @@ configure_xray() {
     {
       "protocol": "freedom",
       "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "tag": "block"
     }
   ],
   "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "ip": [
-          "geoip:private"
-        ],
-        "outboundTag": "block"
-      }
-    ]
+    "domainStrategy": "AsIs"
   }
 }
 EOF
     
-    print_success "Xray configured (VLESS only, warning-only logging)"
+    print_success "Xray configured (Ultra Minimal: DNS cache + zero routing overhead)"
 }
 
 configure_nginx() {
