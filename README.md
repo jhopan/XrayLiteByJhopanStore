@@ -133,8 +133,6 @@ XrayLite menggunakan **Ultra Minimal config** yang dioptimasi untuk:
 | Game ping | 50-80ms | **30-60ms** | **-20ms** |
 | YouTube repeat | 2-3s | **1-2s** | **2x faster** |
 
-📖 **[Read full optimization guide →](docs/OPTIMIZATION.md)**
-
 ---
 
 ## 🎮 Interactive Menu
