@@ -704,11 +704,21 @@ CloudFront Menu:
 
 **Setup CloudFront:**
 1. Buat distribution di AWS CloudFront Console
-2. Origin: neva.jhopanstore.my.id (domain VPS kamu)
-3. Catat CloudFront domain (contoh: d20lw4l1domvh8.cloudfront.net)
-4. Di menu, pilih "Tambah CloudFront domain"
-5. Input domain CloudFront
-6. Generate client config (dapat 2 config: Direct + CloudFront)
+2. Origin: Domain VPS kamu (contoh: neva.jhopanstore.my.id)
+   - Protocol: **HTTPS only** ✅
+   - Port: **443**
+   - Minimum Origin SSL: **TLSv1.2**
+3. Behavior Settings:
+   - Allowed HTTP Methods: **GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE** ✅
+   - Cache Policy: **CachingDisabled** ✅
+   - Origin Request Policy: **AllViewer** ✅
+4. General Settings:
+   - Supported HTTP Versions: **HTTP/2 and HTTP/3** ✅ (HTTP/3 WAJIB untuk WebSocket!)
+5. Catat CloudFront domain (contoh: d20lw4l1domvh8.cloudfront.net)
+6. Tunggu deployment selesai (5-15 menit, status: "Deployed")
+7. Di menu, pilih "Tambah CloudFront domain"
+8. Input domain CloudFront
+9. Generate client config (dapat 2 config: Direct + CloudFront)
 
 **Testing:**
 - Test dengan kuota reguler dulu

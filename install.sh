@@ -423,8 +423,9 @@ with open('$CONFIG_FILE', 'w') as f:
 print('User added to config')
 EOF_PY
     
-    # Restart Xray
-    systemctl restart xray
+    # Restart Xray in background to prevent SSH disconnect
+    nohup systemctl restart xray >/dev/null 2>&1 &
+    sleep 1
     
     # Generate Direct VLESS URL
     VLESS_URL="vless://$UUID@$DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$DOMAIN&path=%2Fvless#VPN-$USERNAME"
@@ -503,8 +504,9 @@ with open('$CONFIG_FILE', 'w') as f:
 print('User removed from config')
 EOF_PY
     
-    # Restart Xray
-    systemctl restart xray
+    # Restart Xray in background to prevent SSH disconnect
+    nohup systemctl restart xray >/dev/null 2>&1 &
+    sleep 1
     
     echo -e "${GREEN}✓ User '$USERNAME' deleted successfully!${NC}"
     ;;
