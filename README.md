@@ -154,7 +154,6 @@ Ketik `menu` untuk akses menu interaktif:
   8. Cek logs
   9. Update system
   10. Test speed (speedtest)
-  11. CloudFront Management
   0. Keluar
 ```
 
@@ -166,7 +165,6 @@ Ketik `menu` untuk akses menu interaktif:
 - Service management (restart Xray/Nginx)
 - Log viewing (Xray/Nginx)
 - Speed test (ping, download, upload)
-- **CloudFront Management** (add/delete/generate config)
 
 ---
 
@@ -200,16 +198,17 @@ sudo vpn-user add john
 # UUID: 52eec3f2-856f-4efa-907f-e6efc4587da7
 # ═══════════════════════════════════════════════════════════════
 # 
-# 【 1. Direct Connection (VPS) 】
+# 【 1. Direct (via Cloudflare) 】
 # vless://52eec3f2...@neva.jhopanstore.my.id:443?...#VPN-john
+#    Note: Domain neva.jhopanstore.my.id sudah di-proxy via Cloudflare (orange cloud)
 # 
-# 【 2. CloudFront (d20lw4l1domvh8.cloudfront.net) 】
-# vless://52eec3f2...@d20lw4l1domvh8.cloudfront.net:443?...#VPN-CF-john
+# 【 2. CloudFront (AWS CDN) 】
+# vless://52eec3f2...@d20lw4l1domvh8.cloudfront.net:443?...#VPN-CloudFront-john
 # 
 # ═══════════════════════════════════════════════════════════════
 # Tips:
-#   • Direct = Low latency (~50-80ms)
-#   • CloudFront = Bypass DPI, zero-rated potential (~80-100ms)
+#   • Direct = Via Cloudflare proxy, bypass DPI (~50-80ms)
+#   • CloudFront = Via AWS CDN, bypass DPI + zero-rated potential (~80-100ms)
 #   • Import semua URL ke v2rayNG untuk backup connection
 
 sudo vpn-user list
@@ -229,11 +228,12 @@ sudo vpn-user url jane
 # UUID: 987fcdeb-51a2-43d7-9012-345678901234
 # ═══════════════════════════════════════════════════════════════
 # 
-# 【 1. Direct Connection (VPS) 】
+# 【 1. Direct (via Cloudflare) 】
 # vless://987fcdeb...@neva.jhopanstore.my.id:443?...#VPN-jane
+#    Note: Domain neva.jhopanstore.my.id sudah di-proxy via Cloudflare (orange cloud)
 # 
-# 【 2. CloudFront (d20lw4l1domvh8.cloudfront.net) 】
-# vless://987fcdeb...@d20lw4l1domvh8.cloudfront.net:443?...#VPN-CF-jane
+# 【 2. CloudFront (AWS CDN) 】
+# vless://987fcdeb...@d20lw4l1domvh8.cloudfront.net:443?...#VPN-CloudFront-jane
 ```
 
 ---
@@ -681,26 +681,15 @@ speedtest --simple
 
 ---
 
-### Q: Apa itu CloudFront Management dan bagaimana cara pakainya?
+### Q: Apa itu CloudFront dan bagaimana cara setup?
 
-**A:** CloudFront Management adalah fitur untuk menambahkan **AWS CloudFront** sebagai CDN layer di depan VPS kamu.
+**A:** CloudFront adalah **AWS CDN** yang bisa dipakai sebagai layer tambahan untuk bypass DPI dan potensi zero-rated.
 
 **Keuntungan:**
-- ✅ **Zero-rated potential** - Kuota Ilmupedia/Edukasi mungkin gratis
+- ✅ **Zero-rated potential** - Kuota Ilmupedia/Edukasi Telkomsel mungkin gratis
 - ✅ **Bypass DPI/throttle** - ISP lihat traffic ke CloudFront (trusted CDN)
 - ✅ **Multiple edge locations** - Jakarta, Singapore, dll (auto-routing)
 - ✅ **High availability** - 99.9% SLA CloudFront
-
-**Cara pakai:**
-```bash
-menu
-# Pilih opsi: 11 (CloudFront Management)
-
-CloudFront Menu:
-  1. Tambah CloudFront domain
-  2. Hapus CloudFront domain
-  3. Generate client config (Direct + CloudFront)
-```
 
 **Setup CloudFront:**
 1. Buat distribution di AWS CloudFront Console
@@ -716,9 +705,8 @@ CloudFront Menu:
    - Supported HTTP Versions: **HTTP/2 and HTTP/3** ✅ (HTTP/3 WAJIB untuk WebSocket!)
 5. Catat CloudFront domain (contoh: d20lw4l1domvh8.cloudfront.net)
 6. Tunggu deployment selesai (5-15 menit, status: "Deployed")
-7. Di menu, pilih "Tambah CloudFront domain"
-8. Input domain CloudFront
-9. Generate client config (dapat 2 config: Direct + CloudFront)
+7. **Saat install XrayLite**, input CloudFront domain ketika ditanya
+8. Setiap user yang dibuat akan otomatis dapat 2 URLs: Direct + CloudFront
 
 **Testing:**
 - Test dengan kuota reguler dulu

@@ -446,25 +446,19 @@ EOF_PY
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
     
-    # 1. Direct connection
-    echo -e "${BLUE}【 1. Direct (VPS) 】${NC}"
+    # 1. Direct (via Cloudflare)
+    echo -e "${BLUE}【 1. Direct (via Cloudflare) 】${NC}"
     echo "$VLESS_URL"
+    echo -e "${YELLOW}   Note: Domain $DOMAIN sudah di-proxy via Cloudflare (orange cloud)${NC}"
     echo ""
     
-    # 2. Cloudflare (always available - same as direct, different description)
-    CLOUDFLARE_URL="vless://$UUID@$DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$DOMAIN&path=%2Fvless#VPN-Cloudflare-$USERNAME"
-    echo -e "${BLUE}【 2. Cloudflare (Proxy via CF) 】${NC}"
-    echo "$CLOUDFLARE_URL"
-    echo -e "${YELLOW}   Note: Domain $DOMAIN harus di-proxy via Cloudflare (orange cloud)${NC}"
-    echo ""
-    
-    # 3. CloudFront (if configured)
+    # 2. CloudFront (if configured)
     CF_CONFIG_FILE="/usr/local/etc/xray/cloudfront.conf"
     if [ -f "$CF_CONFIG_FILE" ] && [ -s "$CF_CONFIG_FILE" ]; then
       CF_DOMAIN=$(head -n1 "$CF_CONFIG_FILE" | tr -d '[:space:]')
       if [ -n "$CF_DOMAIN" ]; then
         CLOUDFRONT_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CloudFront-$USERNAME"
-        echo -e "${BLUE}【 3. CloudFront (AWS CDN) 】${NC}"
+        echo -e "${BLUE}【 2. CloudFront (AWS CDN) 】${NC}"
         echo "$CLOUDFRONT_URL"
         echo ""
       fi
@@ -473,8 +467,7 @@ EOF_PY
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
     echo -e "${YELLOW}Tips:${NC}"
-    echo "  • Direct = Langsung ke VPS (~50-80ms)"
-    echo "  • Cloudflare = Via CF proxy, bypass DPI (~60-90ms)"
+    echo "  • Direct = Via Cloudflare proxy, bypass DPI (~50-80ms)"
     echo "  • CloudFront = Via AWS CDN, bypass DPI + zero-rated potential (~80-100ms)"
     echo "  • Import semua URL ke v2rayNG untuk backup connection"
     ;;
@@ -562,25 +555,19 @@ EOF_PY
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
     
-    # 1. Direct connection
-    echo -e "${BLUE}【 1. Direct (VPS) 】${NC}"
+    # 1. Direct (via Cloudflare)
+    echo -e "${BLUE}【 1. Direct (via Cloudflare) 】${NC}"
     echo "$VLESS_URL"
+    echo -e "${YELLOW}   Note: Domain $DOMAIN sudah di-proxy via Cloudflare (orange cloud)${NC}"
     echo ""
     
-    # 2. Cloudflare
-    CLOUDFLARE_URL="vless://$UUID@$DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$DOMAIN&path=%2Fvless#VPN-Cloudflare-$USERNAME"
-    echo -e "${BLUE}【 2. Cloudflare (Proxy via CF) 】${NC}"
-    echo "$CLOUDFLARE_URL"
-    echo -e "${YELLOW}   Note: Domain $DOMAIN harus di-proxy via Cloudflare (orange cloud)${NC}"
-    echo ""
-    
-    # 3. CloudFront (if configured)
+    # 2. CloudFront (if configured)
     CF_CONFIG_FILE="/usr/local/etc/xray/cloudfront.conf"
     if [ -f "$CF_CONFIG_FILE" ] && [ -s "$CF_CONFIG_FILE" ]; then
       CF_DOMAIN=$(head -n1 "$CF_CONFIG_FILE" | tr -d '[:space:]')
       if [ -n "$CF_DOMAIN" ]; then
         CLOUDFRONT_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CloudFront-$USERNAME"
-        echo -e "${BLUE}【 3. CloudFront (AWS CDN) 】${NC}"
+        echo -e "${BLUE}【 2. CloudFront (AWS CDN) 】${NC}"
         echo "$CLOUDFRONT_URL"
         echo ""
       fi
@@ -589,8 +576,7 @@ EOF_PY
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
     echo -e "${YELLOW}Tips:${NC}"
-    echo "  • Direct = Langsung ke VPS (~50-80ms)"
-    echo "  • Cloudflare = Via CF proxy, bypass DPI (~60-90ms)"
+    echo "  • Direct = Via Cloudflare proxy, bypass DPI (~50-80ms)"
     echo "  • CloudFront = Via AWS CDN, bypass DPI + zero-rated potential (~80-100ms)"
     echo "  • Import semua URL ke v2rayNG untuk backup connection"
     ;;
