@@ -446,10 +446,9 @@ EOF_PY
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
     
-    # 1. Direct (via Cloudflare)
-    echo -e "${BLUE}【 1. Direct (via Cloudflare) 】${NC}"
+    # 1. Direct (Cloudflare)
+    echo -e "${BLUE}【 1. Direct (Cloudflare) 】${NC}"
     echo "$VLESS_URL"
-    echo -e "${YELLOW}   Note: Domain $DOMAIN sudah di-proxy via Cloudflare (orange cloud)${NC}"
     echo ""
     
     # 2. CloudFront (if configured)
@@ -458,18 +457,13 @@ EOF_PY
       CF_DOMAIN=$(head -n1 "$CF_CONFIG_FILE" | tr -d '[:space:]')
       if [ -n "$CF_DOMAIN" ]; then
         CLOUDFRONT_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CloudFront-$USERNAME"
-        echo -e "${BLUE}【 2. CloudFront (AWS CDN) 】${NC}"
+        echo -e "${BLUE}【 2. CloudFront 】${NC}"
         echo "$CLOUDFRONT_URL"
         echo ""
       fi
     fi
     
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
-    echo ""
-    echo -e "${YELLOW}Tips:${NC}"
-    echo "  • Direct = Via Cloudflare proxy, bypass DPI (~50-80ms)"
-    echo "  • CloudFront = Via AWS CDN, bypass DPI + zero-rated potential (~80-100ms)"
-    echo "  • Import semua URL ke v2rayNG untuk backup connection"
     ;;
     
   list)
@@ -555,10 +549,9 @@ EOF_PY
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
     
-    # 1. Direct (via Cloudflare)
-    echo -e "${BLUE}【 1. Direct (via Cloudflare) 】${NC}"
+    # 1. Direct (Cloudflare)
+    echo -e "${BLUE}【 1. Direct (Cloudflare) 】${NC}"
     echo "$VLESS_URL"
-    echo -e "${YELLOW}   Note: Domain $DOMAIN sudah di-proxy via Cloudflare (orange cloud)${NC}"
     echo ""
     
     # 2. CloudFront (if configured)
@@ -567,18 +560,13 @@ EOF_PY
       CF_DOMAIN=$(head -n1 "$CF_CONFIG_FILE" | tr -d '[:space:]')
       if [ -n "$CF_DOMAIN" ]; then
         CLOUDFRONT_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CloudFront-$USERNAME"
-        echo -e "${BLUE}【 2. CloudFront (AWS CDN) 】${NC}"
+        echo -e "${BLUE}【 2. CloudFront 】${NC}"
         echo "$CLOUDFRONT_URL"
         echo ""
       fi
     fi
     
     echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
-    echo ""
-    echo -e "${YELLOW}Tips:${NC}"
-    echo "  • Direct = Via Cloudflare proxy, bypass DPI (~50-80ms)"
-    echo "  • CloudFront = Via AWS CDN, bypass DPI + zero-rated potential (~80-100ms)"
-    echo "  • Import semua URL ke v2rayNG untuk backup connection"
     ;;
     
   *)
