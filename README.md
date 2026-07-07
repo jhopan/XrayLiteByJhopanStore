@@ -154,6 +154,7 @@ Ketik `menu` untuk akses menu interaktif:
   8. Cek logs
   9. Update system
   10. Test speed (speedtest)
+  11. CloudFront Management
   0. Keluar
 ```
 
@@ -165,6 +166,7 @@ Ketik `menu` untuk akses menu interaktif:
 - Service management (restart Xray/Nginx)
 - Log viewing (Xray/Nginx)
 - Speed test (ping, download, upload)
+- **CloudFront Management** (add/delete/generate config)
 
 ---
 
@@ -657,6 +659,49 @@ menu
 ```bash
 speedtest --simple
 ```
+
+---
+
+### Q: Apa itu CloudFront Management dan bagaimana cara pakainya?
+
+**A:** CloudFront Management adalah fitur untuk menambahkan **AWS CloudFront** sebagai CDN layer di depan VPS kamu.
+
+**Keuntungan:**
+- ✅ **Zero-rated potential** - Kuota Ilmupedia/Edukasi mungkin gratis
+- ✅ **Bypass DPI/throttle** - ISP lihat traffic ke CloudFront (trusted CDN)
+- ✅ **Multiple edge locations** - Jakarta, Singapore, dll (auto-routing)
+- ✅ **High availability** - 99.9% SLA CloudFront
+
+**Cara pakai:**
+```bash
+menu
+# Pilih opsi: 11 (CloudFront Management)
+
+CloudFront Menu:
+  1. Tambah CloudFront domain
+  2. Hapus CloudFront domain
+  3. Generate client config (Direct + CloudFront)
+```
+
+**Setup CloudFront:**
+1. Buat distribution di AWS CloudFront Console
+2. Origin: neva.jhopanstore.my.id (domain VPS kamu)
+3. Catat CloudFront domain (contoh: d20lw4l1domvh8.cloudfront.net)
+4. Di menu, pilih "Tambah CloudFront domain"
+5. Input domain CloudFront
+6. Generate client config (dapat 2 config: Direct + CloudFront)
+
+**Testing:**
+- Test dengan kuota reguler dulu
+- Kalau jalan, test dengan kuota Ilmupedia
+- Cek kuota: `*123#` (Telkomsel) setelah browsing 10 menit
+- Kalau kuota tidak berkurang = Zero-rated! 🎉
+
+**Latency:**
+- Direct VPS: ~50-80ms
+- Via CloudFront: ~80-100ms (+20ms overhead CloudFront edge)
+
+**Trade-off:** +20ms latency vs zero-rated potential & bypass DPI
 
 ---
 
