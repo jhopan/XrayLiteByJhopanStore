@@ -448,7 +448,7 @@ EOF_PY
       COUNTER=2
       while IFS= read -r CF_DOMAIN; do
         [ -z "$CF_DOMAIN" ] && continue
-        CF_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CF-$USERNAME"
+        CF_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CF-$USERNAME"
         echo -e "${BLUE}【 $COUNTER. CloudFront ($CF_DOMAIN) 】${NC}"
         echo "$CF_URL"
         echo ""
@@ -557,7 +557,7 @@ EOF_PY
       COUNTER=2
       while IFS= read -r CF_DOMAIN; do
         [ -z "$CF_DOMAIN" ] && continue
-        CF_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CF-$USERNAME"
+        CF_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CF-$USERNAME"
         echo -e "${BLUE}【 $COUNTER. CloudFront ($CF_DOMAIN) 】${NC}"
         echo "$CF_URL"
         echo ""
