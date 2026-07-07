@@ -184,7 +184,7 @@ sudo vpn-user delete <username>
 # List all users
 sudo vpn-user list
 
-# Show VLESS URL for user
+# Show VLESS URLs for user (Direct + CloudFront)
 sudo vpn-user url <username>
 ```
 
@@ -195,11 +195,22 @@ sudo vpn-user add john
 # Output:
 # ✓ User 'john' created successfully!
 # 
-# Username: john
+# ═══════════════════════════════════════════════════════════════
+# VLESS URLs for 'john'
 # UUID: 52eec3f2-856f-4efa-907f-e6efc4587da7
+# ═══════════════════════════════════════════════════════════════
 # 
-# VLESS URL:
-# vless://52eec3f2...@vpn.example.com:443?...#VPN-john
+# 【 1. Direct Connection (VPS) 】
+# vless://52eec3f2...@neva.jhopanstore.my.id:443?...#VPN-john
+# 
+# 【 2. CloudFront (d20lw4l1domvh8.cloudfront.net) 】
+# vless://52eec3f2...@d20lw4l1domvh8.cloudfront.net:443?...#VPN-CF-john
+# 
+# ═══════════════════════════════════════════════════════════════
+# Tips:
+#   • Direct = Low latency (~50-80ms)
+#   • CloudFront = Bypass DPI, zero-rated potential (~80-100ms)
+#   • Import semua URL ke v2rayNG untuk backup connection
 
 sudo vpn-user list
 # Output:
@@ -213,8 +224,16 @@ sudo vpn-user delete john
 
 sudo vpn-user url jane
 # Output:
-# VLESS URL for 'jane':
-# vless://987fcdeb...@vpn.example.com:443?...#VPN-jane
+# ═══════════════════════════════════════════════════════════════
+# VLESS URLs for 'jane'
+# UUID: 987fcdeb-51a2-43d7-9012-345678901234
+# ═══════════════════════════════════════════════════════════════
+# 
+# 【 1. Direct Connection (VPS) 】
+# vless://987fcdeb...@neva.jhopanstore.my.id:443?...#VPN-jane
+# 
+# 【 2. CloudFront (d20lw4l1domvh8.cloudfront.net) 】
+# vless://987fcdeb...@d20lw4l1domvh8.cloudfront.net:443?...#VPN-CF-jane
 ```
 
 ---

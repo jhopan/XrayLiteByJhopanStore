@@ -288,7 +288,7 @@ show_url() {
     
     echo ""
     
-    # Call vpn-user url
+    # Call vpn-user url (will show Direct + CloudFront URLs)
     vpn-user url "$USERNAME"
     
     echo ""

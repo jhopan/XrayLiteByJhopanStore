@@ -426,16 +426,42 @@ EOF_PY
     # Restart Xray
     systemctl restart xray
     
-    # Generate VLESS URL
+    # Generate Direct VLESS URL
     VLESS_URL="vless://$UUID@$DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$DOMAIN&path=%2Fvless#VPN-$USERNAME"
     
     echo -e "${GREEN}✓ User '$USERNAME' created successfully!${NC}"
     echo ""
-    echo "Username: $USERNAME"
-    echo "UUID: $UUID"
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}VLESS URLs for '$USERNAME'${NC}"
+    echo -e "${GREEN}UUID: $UUID${NC}"
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
     echo ""
-    echo -e "${YELLOW}VLESS URL:${NC}"
+    
+    # Direct connection
+    echo -e "${BLUE}【 1. Direct Connection (VPS) 】${NC}"
     echo "$VLESS_URL"
+    echo ""
+    
+    # CloudFront connections (if configured)
+    CF_CONFIG_FILE="/usr/local/etc/xray/cloudfront.conf"
+    if [ -f "$CF_CONFIG_FILE" ] && [ -s "$CF_CONFIG_FILE" ]; then
+      COUNTER=2
+      while IFS= read -r CF_DOMAIN; do
+        [ -z "$CF_DOMAIN" ] && continue
+        CF_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CF-$USERNAME"
+        echo -e "${BLUE}【 $COUNTER. CloudFront ($CF_DOMAIN) 】${NC}"
+        echo "$CF_URL"
+        echo ""
+        ((COUNTER++))
+      done < "$CF_CONFIG_FILE"
+    fi
+    
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo ""
+    echo -e "${YELLOW}Tips:${NC}"
+    echo "  • Direct = Low latency (~50-80ms)"
+    echo "  • CloudFront = Bypass DPI, zero-rated potential (~80-100ms)"
+    echo "  • Import semua URL ke v2rayNG untuk backup connection"
     ;;
     
   list)
@@ -510,11 +536,41 @@ EOF_PY
       exit 1
     fi
     
-    # Generate VLESS URL
+    # Generate Direct VLESS URL
     VLESS_URL="vless://$UUID@$DOMAIN:443?encryption=none&security=tls&sni=$DOMAIN&type=ws&host=$DOMAIN&path=%2Fvless#VPN-$USERNAME"
     
-    echo -e "${GREEN}VLESS URL for '$USERNAME':${NC}"
+    echo ""
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo -e "${GREEN}VLESS URLs for '$USERNAME'${NC}"
+    echo -e "${GREEN}UUID: $UUID${NC}"
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo ""
+    
+    # Direct connection
+    echo -e "${BLUE}【 1. Direct Connection (VPS) 】${NC}"
     echo "$VLESS_URL"
+    echo ""
+    
+    # CloudFront connections (if configured)
+    CF_CONFIG_FILE="/usr/local/etc/xray/cloudfront.conf"
+    if [ -f "$CF_CONFIG_FILE" ] && [ -s "$CF_CONFIG_FILE" ]; then
+      COUNTER=2
+      while IFS= read -r CF_DOMAIN; do
+        [ -z "$CF_DOMAIN" ] && continue
+        CF_URL="vless://$UUID@$CF_DOMAIN:443?encryption=none&security=tls&sni=$CF_DOMAIN&type=ws&host=$CF_DOMAIN&path=%2Fvless#VPN-CF-$USERNAME"
+        echo -e "${BLUE}【 $COUNTER. CloudFront ($CF_DOMAIN) 】${NC}"
+        echo "$CF_URL"
+        echo ""
+        ((COUNTER++))
+      done < "$CF_CONFIG_FILE"
+    fi
+    
+    echo -e "${GREEN}═══════════════════════════════════════════════════════════════${NC}"
+    echo ""
+    echo -e "${YELLOW}Tips:${NC}"
+    echo "  • Direct = Low latency (~50-80ms)"
+    echo "  • CloudFront = Bypass DPI, zero-rated potential (~80-100ms)"
+    echo "  • Import semua URL ke v2rayNG untuk backup connection"
     ;;
     
   *)
