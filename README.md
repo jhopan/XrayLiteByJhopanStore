@@ -628,6 +628,74 @@ Untuk personal use (1-5 users), setup ini sangat stabil dan efisien.
 
 ---
 
+### Q: Game lag/disconnect setelah 5 menit (ping timeout)?
+
+**A:** Ini disebabkan oleh **WebSocket idle timeout**. Game seperti Mobile Legends kirim packet jarang saat idle, sehingga Xray/Nginx menganggap connection idle dan menutupnya.
+
+**Gejala:**
+- ✅ Connect VPN: OK
+- ✅ Game awal: Lancar
+- ✅ YouTube/browsing: Tetap jalan
+- ❌ Setelah <5 menit: Game stuck (ping timeout)
+
+**Root Cause:**
+1. Xray `connIdle` default = 300 detik (5 menit)
+2. Nginx `keepalive_timeout` default = 75 detik
+3. TCP keepalive terlalu lama (7200 detik)
+
+**Solusi (Apply jika mengalami masalah):**
+
+**1. Fix Xray Policy (Critical):**
+```bash
+sudo nano /usr/local/etc/xray/config.json
+
+# Tambahkan setelah "routing": { ... }, sebelum closing bracket:
+"policy": {
+  "levels": {
+    "0": {
+      "handshake": 4,
+      "connIdle": 0,
+      "uplinkOnly": 0,
+      "downlinkOnly": 0
+    }
+  }
+}
+
+# Save & restart
+sudo systemctl restart xray
+```
+
+**2. Fix Nginx Keepalive:**
+```bash
+sudo nano /etc/nginx/sites-available/vpn
+
+# Tambahkan di dalam location /vless (setelah proxy_send_timeout):
+keepalive_timeout 3600s;
+
+# Save & restart
+sudo nginx -t && sudo systemctl restart nginx
+```
+
+**3. Fix TCP Keepalive (Optional):**
+```bash
+# Temporary
+sudo sysctl -w net.ipv4.tcp_keepalive_time=300
+sudo sysctl -w net.ipv4.tcp_keepalive_intvl=30
+sudo sysctl -w net.ipv4.tcp_keepalive_probes=5
+
+# Permanent
+echo "net.ipv4.tcp_keepalive_time=300" | sudo tee -a /etc/sysctl.conf
+echo "net.ipv4.tcp_keepalive_intvl=30" | sudo tee -a /etc/sysctl.conf
+echo "net.ipv4.tcp_keepalive_probes=5" | sudo tee -a /etc/sysctl.conf
+```
+
+**Result:**
+- ✅ Game stabil >30 menit
+- ✅ No disconnect
+- ✅ Ping tetap mungil
+
+---
+
 ### Q: Apakah bisa tambah protocol lain (VMess, Trojan)?
 
 **A:** Bisa, tapi tidak recommended untuk setup ini. XRAY-VLESS-LITE dirancang untuk VLESS only agar lightweight dan simple.
